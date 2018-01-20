@@ -63,4 +63,3 @@ for kp in guy.keypress_sequence:
 
 # Format of printout is: Q W O P N duration fitness
 print(guy)
-
