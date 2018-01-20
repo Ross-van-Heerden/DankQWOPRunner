@@ -33,7 +33,7 @@ class KeyPress:
         self.o = random.choice([self.o] * 9 + [True])
         self.p = random.choice([self.p] * 9 + [True])
         self.n = not (self.q | self.w | self.o | self.p)
-        self.duration = random.choice([self.duration] * 7 + [random.uniform(-1, 1)])  # 30% chance to change
+        self.duration = random.choice([self.duration] * 2 + [random.uniform(-1, 1)])  # 33% chance to change
 
     def __str__(self):
         keypress_string_representation = str(self.q) + ' ' + str(self.w) + ' ' + str(self.o) + ' ' + str(self.p) + ' ' + str(self.n) + ' ' + str(self.duration)
