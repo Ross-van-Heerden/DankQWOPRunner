@@ -3,9 +3,12 @@ from PIL import Image
 import pytesseract
 from mss import mss
 import time
+import re
 
 # I think the QWOP screen is always this width
 QWOP_WIDTH = 640
+
+dist_pattern = re.compile("\-*\d+(\.\d+)? metres")
 
 # sleep to allow user the time to navigate to the QWOP page
 time.sleep(2)
@@ -30,5 +33,8 @@ with mss() as sct:
     end_time = time.time()
     print("Done\nOCR took {:.2f} seconds.\n".format(end_time - start_time))
 
-    print("Output:\n", text)
+    # Scan the screenshot to find how far the runner has come
+    dist_match = dist_pattern.search(text)
+    print(dist_match.group())
+
 
