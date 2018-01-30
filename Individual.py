@@ -27,13 +27,13 @@ class KeyPress:
 
     def mutate(self):
         """ Mutate this object with 10% chance to add/remove a key and change the duration by a random amount """
-
-        self.q = random.choice([self.q] * 9 + [True])  # 10% chance to change
-        self.w = random.choice([self.w] * 9 + [True])
-        self.o = random.choice([self.o] * 9 + [True])
-        self.p = random.choice([self.p] * 9 + [True])
+        self.q = random.choice([self.q] * 9 + [not self.q])  # 10% chance to change
+        self.w = random.choice([self.w] * 9 + [not self.q])
+        self.o = random.choice([self.o] * 9 + [not self.q])
+        self.p = random.choice([self.p] * 9 + [not self.q])
         self.n = not (self.q | self.w | self.o | self.p)
-        self.duration = random.choice([self.duration] * 2 + [random.uniform(-1, 1)])  # 33% chance to change
+        # Could change the line below to only change duration within 20% of its original value but leaving it for now.
+        self.duration = random.choice([self.duration] * 2 + [abs(self.duration + random.uniform(-1, 1))])  # 33% chance to change
 
     def __str__(self):
         keypress_string_representation = str(self.q) + ' ' + str(self.w) + ' ' + str(self.o) + ' ' + str(self.p) + ' ' + str(self.n) + ' ' + str(self.duration)
@@ -42,7 +42,6 @@ class KeyPress:
 
 class Individual:
     """ An individual in the population containing their KeyPress sequence and fitness """
-
     def __init__(self):
         self.keypress_sequence = deque([KeyPress()])  # keypress_sequence initialised to one key press
         self.fitness = 0
