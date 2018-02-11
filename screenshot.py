@@ -91,5 +91,3 @@ with mss.mss() as sct:
             print(dist_match.group())
         else:
             print("Couldn't read the distance from the screenshot")
-
-
