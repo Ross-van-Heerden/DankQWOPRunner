@@ -13,7 +13,7 @@ time.sleep(5)
 keyboard.press('w')
 keyboard.press('o')
 
-time.sleep(2)
+time.sleep(0.1)
 
 keyboard.release('w')
 keyboard.release('o')

@@ -12,6 +12,7 @@ QWOP_WIDTH = 640
 continuous = True
 
 # Regex pattern to find the runner's distance
+# FIXME: should the regex below not be: "\d+.*\d* metres"? since it could be a integer number of meters.
 dist_pattern = re.compile("\-*\d+(\.\d+)? metres")
 
 # Sleep to allow user the time to navigate to the QWOP game
