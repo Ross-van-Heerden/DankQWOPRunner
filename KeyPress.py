@@ -14,7 +14,7 @@ class KeyPress:
         self.o = random.choice([True, False])
         self.p = random.choice([True, False])
         self.n = random.choice([True, False])
-        self.duration = random.uniform(0, 2)
+        self.duration = round(random.uniform(0, 4), 2)
 
     def mutate(self):
         """ Mutate this object with 10% chance to add/remove a key and change the duration by a random amount """
@@ -54,7 +54,7 @@ class KeyPress:
         else:
             keypress_string_representation += "_"
         if self.w:
-            keypress_string_representation += "Q"
+            keypress_string_representation += "W"
         else:
             keypress_string_representation += "_"
         if self.o:

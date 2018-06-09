@@ -2,7 +2,12 @@ Sup Breh! Nice to see you again.
 
 Some notes on what I was trying / playing with.
 
-My current goal is to ignore the Population class for now since it's getting hella confusing when still debugging :O
-So I'm making an individual that executes it's keypress sequence until it is complete or the guy dies.
-Thinking about it we might not even need the Population class at all but I could be missing something esp since I'm
-tired atm, but we can chat about it. Also think it would be cool to add just for completeness sake.
+Question on object orientation in Python:
+Instead of having 'class Individual' inside the Individual.py file should we just remove it?
+Feels weird having to say Individual.Individual() when we wna construct a new Individual, but dno how the proper way
+of doing this is.
+
+Where I am atm:
+Have to make the Population class do crossover properly now. Gna be tough.
+If I'm not keen for that I could work on integrating Stephans screen shot code with the running of an Individual in
+Master, i.e. Continue running till keypress sequence is done or guy dies, and then get the fitness from the screen shot.

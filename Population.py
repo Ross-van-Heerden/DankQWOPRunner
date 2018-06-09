@@ -1,4 +1,7 @@
 import Individual
+import KeyPress
+
+import random
 
 
 class Population:
@@ -6,7 +9,7 @@ class Population:
     def __init__(self, n):  # n is the number of individuals in the population
         self.population = [Individual.Individual() for _ in range(n)]
 
-    def crossover(self, mom, dad):
+    def crossover(self):
         """ This is where mommy and daddy (top 2 individuals) have sexy time """
 
         """
@@ -18,6 +21,11 @@ class Population:
         d = mutate dad
         e = choose dads keypress object
         """
+
+        # FIXME: the individuals have to be sorted according to fitness before we carry on since we use the first two
+        # individuals
+        mom = self.population[0]
+        dad = self.population[1]
 
         # Note: length below refers to how many key presses in the keypress sequence, not the duration of the keypress.
         mom_keypress_length = len(mom.keypress_sequence)
@@ -47,7 +55,7 @@ class Population:
                 #  Build up the new individuals keypress from the parents keypress at the current keypress index based
                 #  on the random number generated.
                 if ran_num <= 0.06:  # Insert new keypress into current keypress index
-                    keypress = KeyPress()
+                    keypress = KeyPress.KeyPress()
                     keypress.mutate()
                     next_population.population[individual_index].keypress_sequence.insert(keypress_index - 1, keypress)
 
@@ -65,4 +73,8 @@ class Population:
 
                 keypress_index += 1
 
-                print(next_population.population[individual_index])
+    def __str__(self):
+        population_string_representation = ""
+        for individual in self.population:
+            population_string_representation += str(individual) + "\n"
+        return population_string_representation
