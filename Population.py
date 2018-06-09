@@ -1,5 +1,6 @@
 import Individual
 
+
 class Population:
     """ Contains all the individuals in the population """
     def __init__(self, n):  # n is the number of individuals in the population
