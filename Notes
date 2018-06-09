@@ -1,0 +1,8 @@
+Sup Breh! Nice to see you again.
+
+Some notes on what I was trying / playing with.
+
+My current goal is to ignore the Population class for now since it's getting hella confusing when still debugging :O
+So I'm making an individual that executes it's keypress sequence until it is complete or the guy dies.
+Thinking about it we might not even need the Population class at all but I could be missing something esp since I'm
+tired atm, but we can chat about it. Also think it would be cool to add just for completeness sake.
