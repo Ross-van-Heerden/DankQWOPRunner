@@ -5,15 +5,17 @@ import mss
 import time
 import re
 
-# I think the QWOP screen is always this width
+# The dimensions of the QWOP screen
 QWOP_WIDTH = 640
+QWOP_HEIGHT = 400
 
-# Boolean controlling whether to repeatedly take screenshots
-continuous = True
+# Boolean controlling whether to repeatedly take screenshots (while runner is still alive)
+is_alive = True
 
 # Regex pattern to find the runner's distance
 # FIXME: should the regex below not be: "\d+.*\d* metres"? since it could be a integer number of meters.
 dist_pattern = re.compile("\-*\d+(\.\d+)? metres")
+restart_pattern = re.compile("press")
 
 # Sleep to allow user the time to navigate to the QWOP game
 time.sleep(2)
@@ -21,14 +23,14 @@ time.sleep(2)
 """ Screen shot explanation: 
 
     =================================
-    l########               ########l
-    l########               ########l
+    l###############################l
+    l###############################l
     l########       o       ########l
     l########      /|\_     ########l
     l########      `/\      ########l
     l########      /  \     ########l
-    l########               ########l
-    l########               ########l
+    l###############################l
+    l###############################l
     =================================
                    | |
                    | |
@@ -36,9 +38,8 @@ time.sleep(2)
     
     # => cropped pixels
                   
-    So the screenshot attempts to crop the 
-    left and right sides of the screen off,
-    leaving behind a QWOP_WIDTH wide column down the middle, hopefully 
+    So the screenshot attempts to crop the surrounding sides of the screen off,
+    leaving behind a QWOP_WIDTH x QWOP_HEIGHT size screenshot, hopefully 
     containing the QWOP man himself.
     
     Y tho?...
@@ -48,6 +49,7 @@ time.sleep(2)
     
     K.
 """
+
 
 def calculate_cropped_box(sct):
     """ Calculate the dimensions of the cropped screenshot
@@ -60,17 +62,19 @@ def calculate_cropped_box(sct):
     # returns {width, height, top, left} dictionary
     monitor = sct.monitors[1]
     # It looks like QWOP's screen is always centered
-    # 'left' calculates the left x-value of the game screen
-    left = int((monitor["width"] - QWOP_WIDTH)/2)
+    # 'left' and 'top' calculates the left x-value and the top y-value of the required text in the game screen
+    left = int((monitor["width"] - QWOP_WIDTH) / 2)
+    top = int((monitor["height"] - QWOP_HEIGHT) / 2)
     # create a new bbox description that embodies the dimensions of the screenshot
-    bbox = {"left": left, "top": 0, "width": QWOP_WIDTH, "height": monitor["height"]}
+    bbox = {"left": left, "top": top, "width": QWOP_WIDTH, "height": QWOP_HEIGHT}
     return bbox
+
 
 with mss.mss() as sct:
 
     cropped_bbox = calculate_cropped_box(sct)
 
-    while continuous:
+    while is_alive:
         # I had to do some elaborate screenshot conversions to get
         # 'mss' working with 'tesseract' OCR.
 
@@ -92,3 +96,8 @@ with mss.mss() as sct:
             print(dist_match.group())
         else:
             print("Couldn't read the distance from the screenshot")
+
+        # Scan the screenshot to find out if the runner has fallen
+        is_alive = not restart_pattern.search(text)
+        if ~is_alive:
+            print("Runner has fallen")
